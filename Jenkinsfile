@@ -29,5 +29,17 @@ pipeline{
                 }
             }
         }
+        stage('Build'){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage('Build App Image'){
+            steps{
+                script{
+                    dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "./docker-file/app/multistage")
+                }
+            }
+        }
     }
 }
