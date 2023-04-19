@@ -60,5 +60,14 @@ pipeline{
                 }
             }
         }
+        stage('Upload App Image'){
+            steps{
+                script{
+                    docker.withRegistry( myappRegistry, registryCredential ) {
+                    dockerImage.push("$BUILD_NUMBER")
+                    dockerImage.push('latest')
+                }
+            }
+        }
     }
 }
