@@ -62,7 +62,7 @@ pipeline{
                 }
             }
         }
-        stage('Upload App Image'){
+        stage('Upload App Image to ECR'){
             steps{
                 script{
                     docker.withRegistry( myappRegistry, registrycredentialsId ) {
