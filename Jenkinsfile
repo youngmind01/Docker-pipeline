@@ -54,7 +54,7 @@ pipeline{
 
                             credentialsId: 'nexus-auth', 
                             groupId: 'com.mycompany.app',
-                            nexusUrl: '192.168.56.12:9000', 
+                            nexusUrl: '192.168.56.11:8081', 
                             nexusVersion: 'nexus3', 
                             protocol: 'http', 
                             repository: 'myapp', 
