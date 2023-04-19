@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage('Fetch code'){
             steps{
-                git branch:'docker', url: 'https://github.com/youngmind01/Docker-pipeline.git'
+                git branch:'master', url: 'https://github.com/youngmind01/Docker-pipeline.git'
             }
         }
         stage('Maven test'){
@@ -37,7 +37,26 @@ pipeline{
         stage('Build App Image'){
             steps{
                 script{
-                    dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "./docker-file/app/multistage")
+                    dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", ".")
+                }
+            }
+        }
+        stage('Push to Nexus'){
+            steps{
+                script{
+                    nexusArtifactUploader artifacts: 
+                    [[artifactId: 'my-app', 
+                    classifier: '', 
+                    file: 'target/my-app-1.0.jar', 
+                    type: 'jar']], 
+
+                            credentialsId: 'nexus-auth', 
+                            groupId: 'com.mycompany.app',
+                            nexusUrl: '192.168.56.12:9000', 
+                            nexusVersion: 'nexus3', 
+                            protocol: 'http', 
+                            repository: 'myapp', 
+                            version: '1.0'
                 }
             }
         }
