@@ -11,5 +11,15 @@ pipeline{
                 git branch:'docker', url: 'https://github.com/youngmind01/Docker-pipeline.git'
             }
         }
+        stage('Maven test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+        stage('Checkstyle Analysis'){
+            steps{
+                sh ' mvn checkstyle:checkstyle'
+            }
+        }
     }
 }
